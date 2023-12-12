@@ -38,7 +38,6 @@ $current_year = date("Y");
             <div class="card-body tab-content">
                 <div class="tab-pane active" id="achat">
                     <!-- Contenu pour Listing -->
-                    <!-- Contenu pour Clients -->
                     <div class="container-fluid">
                         <br>
                         <form class="row" action="/ajax/addAchat.php" id="formAjouterAchat" autocomplete="off">
@@ -67,6 +66,22 @@ $current_year = date("Y");
                             </div>
                         </form>
                         <hr>
+                        <div class="row">
+                            <div class="col">
+                                <h3>Liste des clients qui n'ont pas encore acheté</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" id="noAchatListing">
+
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <h3>Liste des achats</h3>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col" id="achatListing">
 

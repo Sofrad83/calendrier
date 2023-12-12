@@ -116,6 +116,7 @@ $(document).ready(function(){
             success: function (data) {
                 loadClientListing()
                 loadClientOption()
+                loadNoAchatListing()
                 form.trigger('reset')
                 toastr.success('Ajouté !')
             },
@@ -138,6 +139,7 @@ $(document).ready(function(){
                 loadClientListing()
                 loadClientOption()
                 loadAchatListing()
+                loadNoAchatListing()
                 toastr.success(data)
             },
             error: function(data) {
@@ -161,6 +163,7 @@ $(document).ready(function(){
             data: form.serialize(),
             success: function (data) {
                 loadAchatListing()
+                loadNoAchatListing()
                 form.trigger('reset')
                 toastr.success(data)
             },
@@ -205,6 +208,7 @@ $(document).ready(function(){
             success: function (data) {
                 toastr.success(data)
                 loadAchatListing()
+                loadNoAchatListing()
                 $("#"+btn).trigger('click')
             },
             error: function(data) {
@@ -215,6 +219,7 @@ $(document).ready(function(){
     })
 
     loadAchatListing()
+    loadNoAchatListing()
 
 })
 
@@ -365,6 +370,35 @@ function loadAchatListing()
                     {orderable: false, targets: 7}, 
                     {type: "num", targets: [5]},
                     {type: "num-fmt", targets: [6]}
+                ],
+                "aaSorting": [],
+            });
+        },
+        error: function(data) {
+            toastr.error('Erreur !')
+            console.log(data)
+        }
+    });
+}
+
+function loadNoAchatListing()
+{
+    $.ajax({
+        type: "GET",
+        url: "/ajax/getNoAchatListing.php",
+        success: function (data) {
+            $('#noAchatListing').html(data)
+
+            $('#noAchatTable').DataTable({
+                "destroy" : true,
+                'searching': true,
+                'paging': true,
+                "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "all"] ],
+                pageLength: -1,
+                columnDefs: [
+                    // {orderable: false, targets: 7}, 
+                    // {type: "num", targets: [5]},
+                    // {type: "num-fmt", targets: [6]}
                 ],
                 "aaSorting": [],
             });

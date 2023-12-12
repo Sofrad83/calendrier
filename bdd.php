@@ -318,6 +318,35 @@ function recupererAchats($conn) {
     return $rues;
 }
 
+function recupererNoAchats($conn) {
+    $achats = array();
+
+    // Préparation de la requête SQL
+    $current_year = date("Y");
+    $sql = "SELECT client.nom as nom, client.prenom as prenom, rue.nom as rue_nom, quartier.nom as quartier_nom FROM client LEFT JOIN rue on client.rue_id = rue.id LEFT JOIN quartier on rue.quartier_id = quartier.id WHERE client.id NOT IN (SELECT client_id FROM achat WHERE annee = {$current_year}) AND client.id > 0";
+    $result = $conn->query($sql);
+
+    // Vérification si la requête a réussi
+    if ($result === false) {
+        die("Erreur lors de la récupération des achats : " . $conn->error);
+    }
+
+    // Récupération des résultats
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $achats[] = [
+                'nom' => $row['nom'],
+                'prenom' => $row['prenom'],
+                'rue_nom' => $row['rue_nom'],
+                'quartier_nom' => $row['quartier_nom']
+            ];
+        }
+    }
+
+    // Retourner le tableau des quartiers
+    return $achats;
+}
+
 function recupererAchatsDetail($conn, $clientId, $annee) {
     $achats = array();
 
